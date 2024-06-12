@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  userId     String @id @default(uuid())
+  username   String @unique() @default("flameyeti")
+  password   String @default("123456")
+  avatar     String @default("/default_avatar.jpg")
+  tag        String @default("")
+  role       String @default("user")
+  createTime Float
+}
+
+model Group {
+  groupId    String @id @default(uuid())
+  userId     String
+  groupName  String
+  notice     String @default("群主很懒,没写公告")
+  createTime Float
+}
+
+model User_Group {
+  id      Int    @id @default(autoincrement()) @db.UnsignedInt()
+  userId  String
+  groupId String
+}
+
+model Group_Message {
+  id          Int    @id @default(autoincrement()) @db.UnsignedInt()
+  userId      String
+  groupId     String
+  content     String
+  messageType String
+  time        Float
+}
+
+model User_Friend {
+  id       Int    @id @default(autoincrement()) @db.UnsignedInt()
+  friendId String
+  userId   String
+}
+
+model Friend_Message {
+  id          Int    @id @default(autoincrement()) @db.UnsignedInt()
+  userId      String
+  friendId    String
+  content     String
+  messageType String
+  time        Float
+}
