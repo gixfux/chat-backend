@@ -14,7 +14,7 @@ async function bootstrap() {
   app.useStaticAssets('public', { prefix: '/static' });
 
   app.setGlobalPrefix('api');
-  app.enableCors()
+  // app.enableCors()
   app.useGlobalPipes(new ValidatePipe());
   await app.listen(3000);
 }
